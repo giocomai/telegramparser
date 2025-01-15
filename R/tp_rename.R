@@ -56,7 +56,8 @@ tp_rename <- function(path,
           current_path |>
             fs::path_dir(),
           new_file_name
-        )
+        ) |>
+          fs::path_sanitize()
       }
     )) |>
     dplyr::rename(old_path = full_path) |>
