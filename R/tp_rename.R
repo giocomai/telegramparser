@@ -21,17 +21,23 @@
 tp_rename <- function(path,
                       recurse = FALSE,
                       preview = FALSE) {
-  to_process_df <- tibble::tibble(full_path = fs::dir_ls(
+
+  files_df <- fs::dir_info(
     path = path,
     recurse = recurse,
     type = "file",
     glob = "*.json"
-  )) |>
+  )
+
+  to_process_df <- files_df |>
+    dplyr::select(path, birth_time) |>
+    dplyr::rename(full_path = path) |>
     dplyr::mutate(filename = fs::path_file(full_path)) |>
     dplyr::filter(stringr::str_starts(filename, "result")) |>
-    dplyr::mutate(new_path = purrr::map_chr(
+    dplyr::mutate(new_path = purrr::map2_chr(
       .x = full_path,
-      .f = \(current_path) {
+      .y = birth_time,
+      .f = \(current_path, current_birth_time) {
         l <- stringr::str_c(
           readr::read_lines(file = current_path, n_max = 4) |>
             stringr::str_flatten(collapse = "") |>
@@ -44,7 +50,8 @@ tp_rename <- function(path,
 
         new_file_name <- stringr::str_flatten(
           c(
-            as.character(Sys.Date()),
+            current_birth_time |>
+              format("%Y-%m-%e_%H-%M"),
             l[["name"]],
             as.character(l[["id"]])
           ),
@@ -55,9 +62,9 @@ tp_rename <- function(path,
         fs::path(
           current_path |>
             fs::path_dir(),
-          new_file_name
-        ) |>
-          fs::path_sanitize()
+          new_file_name |>
+            fs::path_sanitize()
+        )
       }
     )) |>
     dplyr::rename(old_path = full_path) |>
