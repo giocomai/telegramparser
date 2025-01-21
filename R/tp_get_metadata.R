@@ -51,11 +51,14 @@ tp_get_metadata <- function(path) {
         earliest_id = min(messages_l$id),
         latest_id = max(messages_l$id),
         total_posts = nrow(messages_l),
-        retrieved_at = fs::file_info(path = current_path)[["birth_time"]],
-        filename = fs::path_file(current_path)
+        retrieved_at = fs::file_info(path = current_path[["json_path"]])[["birth_time"]],
+        filename = fs::path_file(current_path[["json_path"]])
       )
 
-      readr::write_csv(file = current_path[["metadata_path"]])
+      readr::write_csv(
+        x = metadata_df,
+        file = current_path[["metadata_path"]]
+      )
 
       metadata_df
     }
