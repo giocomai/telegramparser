@@ -2,7 +2,7 @@
 % Please edit documentation in R/tp_read_messages.R
 \name{tp_read_messages}
 \alias{tp_read_messages}
-\title{Transform a full import of Telegram into a tibble with only main message textual contents}
+\title{Transform a full import of Telegram into a tibble with textual contents as plain character strings}
 \usage{
 tp_read_messages(telegram_df)
 }
@@ -13,5 +13,5 @@ tp_read_messages(telegram_df)
 A tibble; none of the columns is a list.
 }
 \description{
-Transform a full import of Telegram into a tibble with only main message textual contents
+A unique \code{doc_id} column is added in order to provide a unique identifier when combinining different channels.
 }

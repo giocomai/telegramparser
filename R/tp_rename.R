@@ -21,7 +21,6 @@
 tp_rename <- function(path,
                       recurse = FALSE,
                       preview = FALSE) {
-
   files_df <- fs::dir_info(
     path = path,
     recurse = recurse,

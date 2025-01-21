@@ -18,8 +18,8 @@ tp_read_json <- function(path) {
     channel_id = channel_l[["id"]]
   )
 
-  dplyr::bind_cols(channel_info_df,
-                   channel_full_df)
+  dplyr::bind_cols(
+    channel_info_df,
+    channel_full_df
+  )
 }
-
-
