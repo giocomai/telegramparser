@@ -47,7 +47,7 @@ tp_get_metadata <- function(path) {
         channel_type = channel_l[["type"]],
         channel_id = channel_l[["id"]],
         earliest_post = lubridate::as_datetime(as.numeric(min(messages_l$date_unixtime))),
-        latest_post = lubridate::as_datetime(as.numeric(min(messages_l$date_unixtime))),
+        latest_post = lubridate::as_datetime(as.numeric(max(messages_l$date_unixtime))),
         earliest_id = min(messages_l$id),
         latest_id = max(messages_l$id),
         total_posts = nrow(messages_l),
