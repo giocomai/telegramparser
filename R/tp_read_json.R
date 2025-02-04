@@ -7,7 +7,6 @@
 #'
 #' @examples
 tp_read_json <- function(path) {
-
   if (fs::is_dir(path)) {
     path <- fs::dir_ls(
       path = path,
@@ -35,7 +34,8 @@ tp_read_json <- function(path) {
         channel_info_df,
         channel_full_df
       )
-    }) |>
+    }
+  ) |>
     purrr::list_rbind() |>
     dplyr::distinct(channel_id, id, .keep_all = TRUE)
 }

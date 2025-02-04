@@ -24,9 +24,18 @@ tp_read_messages <- function(telegram_df) {
         }
       }
     )) |>
-    dplyr::mutate(datetime = lubridate::as_datetime(as.numeric(date_unixtime))) |>
+    dplyr::mutate(
+      datetime = lubridate::as_datetime(as.numeric(date_unixtime))
+    ) |>
     dplyr::mutate(date = lubridate::as_date(datetime)) |>
-    tidyr::unite(col = "doc_id", channel_name, id, sep = "_", remove = FALSE, na.rm = FALSE) |>
+    tidyr::unite(
+      col = "doc_id",
+      channel_name,
+      id,
+      sep = "_",
+      remove = FALSE,
+      na.rm = FALSE
+    ) |>
     dplyr::select(
       doc_id,
       text,

@@ -13,14 +13,22 @@
 #' @export
 #'
 #' @examples
-tp_select <- function(path,
+tp_select <- function(path = NULL,
                       channel_name = NULL,
                       channel_id = NULL) {
+  if (is.null(path)) {
+    path <- fs::path(".")
+  }
+
   if (fs::is_dir(path) == FALSE) {
     cli::cli_abort("{.var path} must be a folder, and {.path {path}} isn't.")
   }
 
   metadata_df <- tp_get_metadata(path = path)
+
+  if (nrow(metadata_df) == 0) {
+    return(NULL)
+  }
 
   if (is.null(channel_name) & is.null(channel_id)) {
     selected_df <- metadata_df
@@ -38,6 +46,7 @@ tp_select <- function(path,
     dplyr::left_join(
       y = tibble::tibble(full_path = fs::dir_ls(path = path)) |>
         dplyr::mutate(filename = fs::path_file(full_path)),
-      by = "filename") |>
+      by = "filename"
+    ) |>
     dplyr::pull(full_path)
 }

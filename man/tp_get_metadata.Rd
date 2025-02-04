@@ -4,7 +4,7 @@
 \alias{tp_get_metadata}
 \title{Get (and cache) metadata for previously exported Telegram files}
 \usage{
-tp_get_metadata(path)
+tp_get_metadata(path = NULL)
 }
 \arguments{
 \item{path}{Path to a json file or a folder of json files Exported from Telegram. If a folder is given, all json files within it will be processed.}
@@ -14,4 +14,7 @@ A tibble with basic metadata about all json files.
 }
 \description{
 Metadata are stored as csv files along with the json file.
+}
+\examples{
+tp_get_metadata()
 }

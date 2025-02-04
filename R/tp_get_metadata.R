@@ -8,7 +8,12 @@
 #' @export
 #'
 #' @examples
-tp_get_metadata <- function(path) {
+#' tp_get_metadata()
+tp_get_metadata <- function(path = NULL) {
+  if (is.null(path)) {
+    path <- fs::path(".")
+  }
+
   if (fs::is_dir(path)) {
     path <- fs::dir_ls(
       path = path,
@@ -23,7 +28,12 @@ tp_get_metadata <- function(path) {
       json_filename = fs::path_file(json_path),
       base_folder = fs::path_dir(json_path)
     ) |>
-    dplyr::mutate(metadata_filename = stringr::str_c(fs::path_ext_remove(json_filename), "_metadata.csv")) |>
+    dplyr::mutate(
+      metadata_filename = stringr::str_c(
+        fs::path_ext_remove(json_filename),
+        "_metadata.csv"
+      )
+    ) |>
     dplyr::mutate(metadata_path = fs::path(base_folder, metadata_filename))
 
 
@@ -32,10 +42,12 @@ tp_get_metadata <- function(path) {
     .x = purrr::transpose(paths_df),
     .f = \(current_path) {
       if (fs::file_exists(current_path[["metadata_path"]])) {
-        return(readr::read_csv(
-          file = current_path[["metadata_path"]],
-          show_col_types = FALSE
-        ))
+        return(
+          readr::read_csv(
+            file = current_path[["metadata_path"]],
+            show_col_types = FALSE
+          )
+        )
       }
 
       channel_l <- yyjsonr::read_json_file(filename = current_path[["json_path"]])
