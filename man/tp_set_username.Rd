@@ -27,10 +27,10 @@ Unfortunately, it cannot be retrieved from the export json files themselves
 and needs to be added manually.
 }
 \details{
-Information is cached locally in a file called "tp_usernames.csv" located
+Information is cached locally in a file called \code{tp_usernames.csv} located
 in the path folder.
 
-If no \code{channel_username} is given, the user will be requesed to add it
+If no \code{channel_username} is given, the user will be requested to add it
 interactively.
 }
 \examples{

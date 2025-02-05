@@ -4,10 +4,10 @@
 #' Unfortunately, it cannot be retrieved from the export json files themselves
 #' and needs to be added manually.
 #'
-#' Information is cached locally in a file called "tp_usernames.csv" located
+#' Information is cached locally in a file called `tp_usernames.csv` located
 #' in the path folder.
 #'
-#' If no `channel_username` is given, the user will be requesed to add it
+#' If no `channel_username` is given, the user will be requested to add it
 #' interactively.
 #'
 #' @inheritParams tp_get_username
@@ -172,4 +172,52 @@ tp_get_username <- function(channel_name = NULL,
   } else {
     return(NULL)
   }
+}
+
+
+#' Interactively set all Telegram channel usernames not yet stored locally
+#'
+#' @inheritParams tp_get_username
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' if (interactive()) {
+#'   tp_set_all_usernames()
+#' }
+tp_set_all_usernames <- function(path) {
+  if (is.null(path)) {
+    path <- fs::path(".")
+  }
+  metadata_df <- tp_get_metadata(path = path)
+
+  channels_df <- readr::read_csv(
+    file = fs::path(path, "tp_usernames.csv"),
+    col_types = "icc"
+  )
+
+  missing_usernames_df <- metadata_df |>
+    dplyr::anti_join(
+      y = channels_df,
+      by = "channel_id"
+    )
+
+  purrr::walk(
+    .x = purrr::transpose(missing_usernames_df),
+    .f = \(current_channel) {
+      tp_set_username(
+        channel_name = current_channel[["channel_name"]],
+        channel_id = current_channel[["channel_id"]],
+        path = path
+      )
+    }
+  )
+
+  channels_df <- readr::read_csv(
+    file = fs::path(path, "tp_usernames.csv"),
+    col_types = "icc"
+  )
+
+  channels_df
 }
