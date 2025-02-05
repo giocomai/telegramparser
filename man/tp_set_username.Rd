@@ -12,6 +12,11 @@ tp_set_username(
 )
 }
 \arguments{
+\item{channel_username}{Username of the Telegram channel, either as link
+(e.g. "https://t.me/username"), as username ("@username"), or as plain text
+("username"). Either way, the username is stored consistently internally as
+plain text.}
+
 \item{path}{Path to a folder where a \code{tp_usernames.csv} file is expected to
 be located. This will usually be the same folder where Telegram archives
 are stored.}

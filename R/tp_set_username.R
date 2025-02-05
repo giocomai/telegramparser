@@ -10,6 +10,10 @@
 #' If no `channel_username` is given, the user will be requested to add it
 #' interactively.
 #'
+#' @param channel_username Username of the Telegram channel, either as link
+#'   (e.g. "https://t.me/username"), as username ("@username"), or as plain text
+#'   ("username"). Either way, the username is stored consistently internally as
+#'   plain text.
 #' @inheritParams tp_get_username
 #'
 #' @returns A data frame with one row and three columns (`channel_id`,
