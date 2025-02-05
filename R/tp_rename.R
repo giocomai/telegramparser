@@ -18,9 +18,11 @@
 #'   tp_rename(path = ".", preview = "TRUE")
 #' }
 #' }
-tp_rename <- function(path,
+tp_rename <- function(path = NULL,
                       recurse = FALSE,
                       preview = FALSE) {
+  path <- tp_get_options(path = path)[["path"]]
+
   files_df <- fs::dir_info(
     path = path,
     recurse = recurse,

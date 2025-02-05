@@ -4,7 +4,7 @@
 \alias{tp_rename}
 \title{Rename Telegram export files consistently}
 \usage{
-tp_rename(path, recurse = FALSE, preview = FALSE)
+tp_rename(path = NULL, recurse = FALSE, preview = FALSE)
 }
 \arguments{
 \item{path}{Path to folder where "result.json" files are stored.}

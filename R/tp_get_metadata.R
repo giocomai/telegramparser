@@ -10,9 +10,7 @@
 #' @examples
 #' tp_get_metadata()
 tp_get_metadata <- function(path = NULL) {
-  if (is.null(path)) {
-    path <- fs::path(".")
-  }
+  path <- tp_get_options(path = path)[["path"]]
 
   if (fs::is_dir(path)) {
     path <- fs::dir_ls(

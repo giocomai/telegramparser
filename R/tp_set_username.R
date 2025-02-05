@@ -30,9 +30,7 @@ tp_set_username <- function(channel_name = NULL,
                             channel_id = NULL,
                             channel_username = NULL,
                             path = NULL) {
-  if (is.null(path)) {
-    path <- fs::path(".")
-  }
+  path <- tp_get_options(path = path)[["path"]]
 
   if (is.null(channel_id)) {
     current_file <- tp_select(
@@ -143,9 +141,7 @@ tp_set_username <- function(channel_name = NULL,
 tp_get_username <- function(channel_name = NULL,
                             channel_id = NULL,
                             path = NULL) {
-  if (is.null(path)) {
-    path <- fs::path(".")
-  }
+  path <- tp_get_options(path = path)[["path"]]
 
   if (fs::file_exists(fs::path(path, "tp_usernames.csv"))) {
     all_channels_df <- readr::read_csv(

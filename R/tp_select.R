@@ -16,9 +16,7 @@
 tp_select <- function(path = NULL,
                       channel_name = NULL,
                       channel_id = NULL) {
-  if (is.null(path)) {
-    path <- fs::path(".")
-  }
+  path <- tp_get_options(path = path)[["path"]]
 
   if (fs::is_dir(path) == FALSE) {
     cli::cli_abort("{.var path} must be a folder, and {.path {path}} isn't.")
