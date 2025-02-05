@@ -190,7 +190,8 @@ tp_set_all_usernames <- function(path) {
   if (is.null(path)) {
     path <- fs::path(".")
   }
-  metadata_df <- tp_get_metadata(path = path)
+  metadata_df <- tp_get_metadata(path = path) |>
+    dplyr::distinct(channel_id, .keep_all = TRUE)
 
   channels_df <- readr::read_csv(
     file = fs::path(path, "tp_usernames.csv"),
