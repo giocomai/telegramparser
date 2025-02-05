@@ -187,9 +187,8 @@ tp_get_username <- function(channel_name = NULL,
 #'   tp_set_all_usernames()
 #' }
 tp_set_all_usernames <- function(path) {
-  if (is.null(path)) {
-    path <- fs::path(".")
-  }
+  path <- tp_get_options(path = path)[["path"]]
+
   metadata_df <- tp_get_metadata(path = path) |>
     dplyr::distinct(channel_id, .keep_all = TRUE)
 
