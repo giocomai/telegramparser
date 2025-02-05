@@ -5,9 +5,9 @@
 \title{Set the channel username for locally stored Telegram channels}
 \usage{
 tp_set_username(
-  channel_username = NULL,
-  channel_id = NULL,
   channel_name = NULL,
+  channel_id = NULL,
+  channel_username = NULL,
   path = NULL
 )
 }

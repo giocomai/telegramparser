@@ -22,27 +22,44 @@
 #'   channel_name = "BBC News | Русская служба",
 #'   channel_username = "bbcrussian"
 #' )
-tp_set_username <- function(channel_username = NULL,
+tp_set_username <- function(channel_name = NULL,
                             channel_id = NULL,
-                            channel_name = NULL,
+                            channel_username = NULL,
                             path = NULL) {
   if (is.null(path)) {
     path <- fs::path(".")
   }
 
   if (is.null(channel_id)) {
-    channel_id <- tp_select(
+    current_file <- tp_select(
       path = path,
       channel_name = channel_name
-    ) |>
+    )
+    if (is.null(current_file)) {
+      cli::cli_abort(
+        c(
+          x = "No local archive for {.val {channel_name}} found in {.path {path}}",
+          i = "You can still store the channel username by providing both {.var channel_name} and {.var channel_id}, or set the path to a folder where the relevant Telgram archive is stored."
+        )
+      )
+    }
+    channel_id <- current_file |>
       tp_get_metadata() |>
       dplyr::pull(channel_id)
   } else if (is.null(channel_name)) {
-    channel_name <- tp_select(
+    current_file <- tp_select(
       path = path,
       channel_id = channel_id
-    ) |>
-      tp_get_metadata() |>
+    )
+    if (is.null(current_file)) {
+      cli::cli_abort(
+        c(
+          x = "No local archive for {.val {channel_id}} found in {.path {path}}",
+          i = "You can still store the channel username by providing both {.var channel_name} and {.var channel_id}, or set the path to a folder where the relevant Telgram archive is stored."
+        )
+      )
+    }
+    channel_name <- tp_get_metadata() |>
       dplyr::pull(channel_name)
   } else {
     cli::cli_abort("Either {.var channel_id} or {.var channel_name} must be given.")
@@ -69,20 +86,9 @@ tp_set_username <- function(channel_username = NULL,
     }
   }
 
-  stringr::str_flatten(
-    c(
-      "Insert channel username for channel with name ",
-      channel_name,
-      " and id ",
-      channel_id,
-      ": "
-    ),
-    collapse = ""
-  )
-
   if (is.null(channel_username)) {
     channel_username <- readline(
-      prompt = cli::cli_text("Insert channel username for channel with name {.val {channel_username}} and id {.val {channel_id}}: ")
+      prompt = cli::cli_text("Insert channel username for channel with name {.val {channel_name}} and id {.val {channel_id}}: ")
     )
   }
 
