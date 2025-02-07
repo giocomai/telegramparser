@@ -186,7 +186,7 @@ tp_get_username <- function(channel_name = NULL,
 #' if (interactive()) {
 #'   tp_set_all_usernames()
 #' }
-tp_set_all_usernames <- function(path) {
+tp_set_all_usernames <- function(path = NULL) {
   path <- tp_get_options(path = path)[["path"]]
 
   metadata_df <- tp_get_metadata(path = path) |>

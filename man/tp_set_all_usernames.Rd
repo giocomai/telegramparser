@@ -4,7 +4,7 @@
 \alias{tp_set_all_usernames}
 \title{Interactively set all Telegram channel usernames not yet stored locally}
 \usage{
-tp_set_all_usernames(path)
+tp_set_all_usernames(path = NULL)
 }
 \arguments{
 \item{path}{Path to a folder where a \code{tp_usernames.csv} file is expected to
