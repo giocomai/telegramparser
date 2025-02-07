@@ -1,6 +1,6 @@
 Package: telegramparser
 Title: Parses Telegram json files, prepares them for further analysis
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: 
     c(person(given = "Giorgio",
              family = "Comai",
@@ -18,5 +18,7 @@ Imports:
     fs,
     lubridate,
     purrr,
+    rvest,
     stringr,
+    xml2,
     yyjsonr

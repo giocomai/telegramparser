@@ -63,10 +63,9 @@ tp_set_username <- function(channel_name = NULL,
     }
     channel_name <- tp_get_metadata() |>
       dplyr::pull(channel_name)
-  } else {
+  } else if (is.null(channel_name) & is.null(channel_id)) {
     cli::cli_abort("Either {.var channel_id} or {.var channel_name} must be given.")
   }
-
 
   previous_df <- tp_get_username(
     channel_id = channel_id,
