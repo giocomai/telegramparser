@@ -15,7 +15,8 @@
 #' @examples
 tp_select <- function(path = NULL,
                       channel_name = NULL,
-                      channel_id = NULL) {
+                      channel_id = NULL,
+                      only_latest = TRUE) {
   path <- tp_get_options(path = path)[["path"]]
 
   if (fs::is_dir(path) == FALSE) {
@@ -38,6 +39,11 @@ tp_select <- function(path = NULL,
       dplyr::filter(!!channel_id == channel_id)
   } else {
     cli::cli_abort("Either {.var channel_name} or {.var channel_id} must be provided.")
+  }
+
+  if (only_latest) {
+    selected_df <- selected_df |>
+      dplyr::slice_max(latest_post)
   }
 
   selected_df |>

@@ -4,7 +4,12 @@
 \alias{tp_select}
 \title{Select a Telegram channel from a folder where multiple archives are stored}
 \usage{
-tp_select(path = NULL, channel_name = NULL, channel_id = NULL)
+tp_select(
+  path = NULL,
+  channel_name = NULL,
+  channel_id = NULL,
+  only_latest = TRUE
+)
 }
 \arguments{
 \item{path}{Path to a folder where Telegram archives in json format have
