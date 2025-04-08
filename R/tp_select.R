@@ -2,11 +2,11 @@
 #'
 #' @param path Path to a folder where Telegram archives in json format have
 #'   previously been stored.
-#' @param channel_name Defaults to NULL. Name of the channel, must match
-#'   exactly. Be aware that, in principle, different channels can have exactly
-#'   the same name or can change name, `channel_id` is generally safer.
-#' @param channel_id Defaults to NULL. Numeric identifier of the channel, must
-#'   match exactly.
+#' @param channel_name Defaults to NULL. Name of one ore more channels, must
+#'   match exactly. Be aware that, in principle, different channels can have
+#'   exactly the same name or can change name, `channel_id` is generally safer.
+#' @param channel_id Defaults to NULL. Numeric identifier of one ore more
+#'   channels, must match exactly.
 #'
 #' @returns A vector of paths to json files corresponding to the relevant
 #'   Telegram channel.
@@ -31,19 +31,21 @@ tp_select <- function(path = NULL,
 
   if (is.null(channel_name) & is.null(channel_id)) {
     selected_df <- metadata_df
-  } else if (is.null(channel_name) == FALSE) {
+  } else if (!is.null(channel_name)) {
     selected_df <- metadata_df |>
-      dplyr::filter(!!channel_name == channel_name)
-  } else if (is.null(channel_id) == FALSE) {
+      dplyr::filter(channel_name %in% !!channel_name)
+  } else if (!is.null(channel_id)) {
     selected_df <- metadata_df |>
-      dplyr::filter(!!channel_id == channel_id)
+      dplyr::filter(channel_id %in% !!channel_id)
   } else {
     cli::cli_abort("Either {.var channel_name} or {.var channel_id} must be provided.")
   }
 
   if (only_latest) {
     selected_df <- selected_df |>
-      dplyr::slice_max(latest_post)
+      dplyr::group_by(channel_id) |>
+      dplyr::slice_max(latest_id) |>
+      dplyr::ungroup()
   }
 
   selected_df |>

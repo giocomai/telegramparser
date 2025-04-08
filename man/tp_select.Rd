@@ -15,12 +15,12 @@ tp_select(
 \item{path}{Path to a folder where Telegram archives in json format have
 previously been stored.}
 
-\item{channel_name}{Defaults to NULL. Name of the channel, must match
-exactly. Be aware that, in principle, different channels can have exactly
-the same name or can change name, \code{channel_id} is generally safer.}
+\item{channel_name}{Defaults to NULL. Name of one ore more channels, must
+match exactly. Be aware that, in principle, different channels can have
+exactly the same name or can change name, \code{channel_id} is generally safer.}
 
-\item{channel_id}{Defaults to NULL. Numeric identifier of the channel, must
-match exactly.}
+\item{channel_id}{Defaults to NULL. Numeric identifier of one ore more
+channels, must match exactly.}
 }
 \value{
 A vector of paths to json files corresponding to the relevant
