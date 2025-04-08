@@ -148,7 +148,9 @@ tp_get_username <- function(channel_name = NULL,
       col_types = "icc"
     )
 
-    if (!is.null(channel_id) & is.null(channel_name)) {
+    if (is.null(channel_id) & is.null(channel_name)) {
+      return(all_channels_df)
+    } else if (!is.null(channel_id) & is.null(channel_name)) {
       channel_df <- all_channels_df |>
         dplyr::filter(
           .data[["channel_id"]] %in% .env[["channel_id"]],
