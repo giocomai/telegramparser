@@ -21,4 +21,5 @@ Channel usernames are necessary to reproduce urls to posts.
 }
 \examples{
 tp_set_username(channel_name = "BBC News | Русская служба")
+tp_get_username(channel_name = "BBC News | Русская служба")
 }

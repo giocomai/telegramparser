@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' if (interactive) {
-#'  tp_read_archive()
+#'   tp_read_archive()
 #' }
 tp_read_archive <- function(path, type = c("messages", "users", "media")) {
   if (!fs::is_file(path)) {

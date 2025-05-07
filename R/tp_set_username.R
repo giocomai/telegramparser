@@ -137,6 +137,7 @@ tp_set_username <- function(channel_name = NULL,
 #'
 #' @examples
 #' tp_set_username(channel_name = "BBC News | Русская служба")
+#' tp_get_username(channel_name = "BBC News | Русская служба")
 tp_get_username <- function(channel_name = NULL,
                             channel_id = NULL,
                             path = NULL) {
